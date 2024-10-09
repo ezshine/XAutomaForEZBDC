@@ -27,10 +27,10 @@ jobs:
 
       - name: Run
         env:
-          CONSUMERAPIKEY: ${{secrets.CONSUMERAPIKEY}}
-          CONSUMERAPIKEYSECRET: ${{secrets.CONSUMERAPIKEYSECRET}}
-          ACCESSTOKEN: ${{secrets.ACCESSTOKEN}}
-          ACCESSTOKENSECRET: ${{secrets.ACCESSTOKENSECRET}}
+          X_CONSUMERAPIKEY: ${{secrets.X_CONSUMERAPIKEY}}
+          X_CONSUMERAPIKEYSECRET: ${{secrets.X_CONSUMERAPIKEYSECRET}}
+          X_ACCESSTOKEN: ${{secrets.X_ACCESSTOKEN}}
+          X_ACCESSTOKENSECRET: ${{secrets.X_ACCESSTOKENSECRET}}
         run:
           node index.js
 
