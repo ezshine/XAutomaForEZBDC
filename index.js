@@ -96,7 +96,7 @@ async function getTweetText(){
 
     let text =  `每日一词：${wordItem.word}`+"\n\n"+
                     `例句：${wordItem.sampleSentences[Math.floor(Math.random()*wordItem.sampleSentences.length)].en}`+"\n\n"+
-                    `查看释义：https://ezbdc.dashu.ai/query/${wordItem.word}.html`+" "+`#ez背单词`;
+                    `查看释义：https://ezbdc.dashu.ai/query/${wordItem.word}.html`+" "+`#背单词 #学英语`;
 
     return {text:text,medias:["./output.png"]};
 }
