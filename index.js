@@ -56,15 +56,27 @@ async function getTweetText(){
     const width = 800;
     const height = 500;
     const word = wordItem.word;
+    const phonetic = wordItem.britishPhonetic;
+    const cates = wordItem.catetags.join(",");
 
-    const svgText = `
+    let svgText = `
 <svg width="${width}" height="${height}">
   <style>
     .title { 
-      fill: #000; 
+      fill: #235266; 
       font-size: 80px; 
       font-weight: bold; 
-      font-family: sans-serif;
+      font-family: verdana;
+    }
+    .subtitle { 
+      fill: #397D99; 
+      font-size: 24px; 
+      font-family: verdana;
+    }
+    .subtitle2 { 
+      fill: #397D99; 
+      font-size: 16px; 
+      font-family: verdana;
     }
   </style>
   <text 
@@ -73,6 +85,24 @@ async function getTweetText(){
     text-anchor="middle" 
     dominant-baseline="central" 
     class="title">${word}</text>
+    <text 
+    x="50%" 
+    y="60%" 
+    text-anchor="middle" 
+    dominant-baseline="central" 
+    class="subtitle">${phonetic}</text>
+    <text 
+    x="50%" 
+    y="50%" 
+    text-anchor="middle" 
+    dominant-baseline="central" 
+    class="title">${word}</text>
+    <text 
+    x="50%" 
+    y="90%" 
+    text-anchor="middle" 
+    dominant-baseline="central" 
+    class="subtitle2">所属分类：${cates}</text>
 </svg>
     `;
 
@@ -81,7 +111,7 @@ async function getTweetText(){
         width: width,
         height: height,
         channels: 3,
-        background: { r: 255, g: 255, b: 255 }
+        background: { r: 230, g: 240, b: 244 }
       }
     })
     .composite([
@@ -94,9 +124,12 @@ async function getTweetText(){
     .png()
     .toFile('output.png')
 
-    let text =  `每日一词：${wordItem.word}`+"\n\n"+
-                    `例句：${wordItem.sampleSentences[Math.floor(Math.random()*wordItem.sampleSentences.length)].en}`+"\n\n"+
-                    `查看释义：https://ezbdc.dashu.ai/query/${wordItem.word}.html`+" "+`#背单词 #学英语`;
+    let sentenceIndex = Math.floor(Math.random()*wordItem.sampleSentences.length);
+    let text =  `每天一个 #背单词：${wordItem.word}`+"\n\n"+
+                    `例句：${wordItem.sampleSentences[sentenceIndex].en}`+"\n"+
+                    `翻译：${wordItem.sampleSentences[sentenceIndex].cn}`+"\n\n"+
+                    `查看详情：https://ezbdc.dashu.ai/query/${wordItem.word}.html`+"\n\n"+
+                    "关注我 #学英语 其实很简单";
 
     return {text:text,medias:["./output.png"]};
 }
