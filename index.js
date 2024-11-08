@@ -119,7 +119,7 @@ async function getTweetText(){
     .toFile('output.png')
 
     let sentenceIndex = Math.floor(Math.random()*wordItem.sampleSentences.length);
-    let text =  `每天一个 #背单词：${wordItem.word}`+"\n\n"+
+    let text =  `每天学一个 #背单词：${wordItem.word}`+"\n\n"+
                     `例句：${wordItem.sampleSentences[sentenceIndex].en}`+"\n"+
                     `翻译：${wordItem.sampleSentences[sentenceIndex].cn}`+"\n\n"+
                     `查看详情：https://ezbdc.dashu.ai/query/${wordItem.word}.html`+"\n\n"+
