@@ -97,12 +97,6 @@ async function getTweetText(){
     text-anchor="middle" 
     dominant-baseline="central" 
     class="title">${word}</text>
-    <text 
-    x="50%" 
-    y="90%" 
-    text-anchor="middle" 
-    dominant-baseline="central" 
-    class="subtitle2">所属分类：${cates}</text>
 </svg>
     `;
 
