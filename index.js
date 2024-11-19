@@ -109,18 +109,18 @@ async function createCardImage(wordItem){
         fill: #235266; 
         font-size: 160px; 
         font-weight: bold; 
-        font-family: verdana;
+        font-family: "Noto Sans CJK SC", sans-serif;
       }
       .subtitle { 
         fill: #397D99; 
         font-size: 72px; 
-        font-family: verdana;
+        font-family: "Noto Sans CJK SC", sans-serif;
       }
         .subtitle2 { 
         fill: #397D99; 
         font-size: 48px; 
         font-weight: bold; 
-        font-family: verdana;
+        font-family: "Noto Sans CJK SC", sans-serif;
       }
     </style>
     <image 
