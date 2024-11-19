@@ -157,6 +157,7 @@ function getByteLength(str) {
 }
 
 export default {
+    exists,
     randomEmoji,
     formatDate,
     sleep,

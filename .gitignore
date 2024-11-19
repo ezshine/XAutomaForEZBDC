@@ -1,5 +1,7 @@
 .DS_Store
 output.png
+temp
+video.mp4
 pnpm-lock.yaml
 
 # Logs
