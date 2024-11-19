@@ -84,7 +84,7 @@ async function getTweetText(){
         }
     }
 
-    let text =  `每天一个 #背单词：${wordItem.word}`+"\n"+
+    let text =  `每天一个 #背单词：${wordItem.word}`+"\n\n"+
                     (wordItem.sampleSentences.length>0?(`例句：${wordItem.sampleSentences[sentenceIndex].en}`+"\n"+
                     `翻译：${wordItem.sampleSentences[sentenceIndex].cn}`+"\n\n"):"")+
                     `查看详情：https://ezbdc.dashu.ai/query/${wordItem.word}.html`+"\n\n"+
