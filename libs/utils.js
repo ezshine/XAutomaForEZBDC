@@ -66,7 +66,7 @@ function sleep(ms=500){
     });
 }
 
-async function downloadFile(url,ext){
+async function downloadFile(url,filePath){
     console.log("downloadFile:",url);
     
     try{
@@ -78,20 +78,10 @@ async function downloadFile(url,ext){
 
         // 如果没有扩展名，返回
         if (!extension) {
-            if(ext)extension=ext;
-            else{
-                console.error('Could not determine file extension');
-                return;
-            }
+            extension = filePath ? filePath.split('.').pop() || '' : '';
         }
 
-        // 合并目标路径和扩展名
-        const hasTempDir = await exists("temp");
-        console.log("hasTempDir",hasTempDir);
-        if(!hasTempDir){
-            await fs.mkdir("temp", { recursive: false });
-        }
-        const finalDestination = `temp/temp.${extension}`;
+       const finalDestination = filePath;
         // 使用 fs.promises.writeFile 写入文件
         await fs.writeFile(finalDestination, response.rawBody);
         
@@ -156,6 +146,55 @@ function getByteLength(str) {
     return new TextEncoder().encode(str).length;
 }
 
+function calculateTextWidth(text, fontSize = 16) {
+    // 简单的字符宽度估算
+    const chineseCharWidth = fontSize;
+    const englishCharWidth = fontSize / 2;
+    
+    return text.split('').reduce((width, char) => {
+        // 判断字符是中文还是英文/标点
+        if (/[\u4e00-\u9fff]/.test(char)) {
+            return width + chineseCharWidth;
+        } else {
+            return width + englishCharWidth;
+        }
+    }, 0);
+}
+function addLineBreaks(text, maxWidth) {
+    const fontSize = 48;
+    const lines = [];
+    let currentLine = '';
+
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        
+        // 如果遇到换行符直接换行
+        if (char === '\n') {
+            lines.push(currentLine);
+            currentLine = '';
+            continue;
+        }
+
+        const testLine = currentLine + char;
+        
+        const isPunctuation = /[。，、；：""''（）【】《》,.!?()]/.test(char);
+        const isNextLinePossible = i + 1 < text.length && /[。，、；：""''（）【】《》,.!?()]/.test(text[i+1]);
+        
+        if (calculateTextWidth(testLine, fontSize) <= maxWidth || (isPunctuation && !isNextLinePossible)) {
+            currentLine = testLine;
+        } else {
+            lines.push(currentLine);
+            currentLine = char;
+        }
+    }
+    
+    if (currentLine) {
+        lines.push(currentLine);
+    }
+    
+    return lines.join('<br>');
+}
+
 export default {
     exists,
     randomEmoji,
@@ -163,5 +202,6 @@ export default {
     sleep,
     downloadFile,
     cobaltApi,
-    getByteLength
+    getByteLength,
+    addLineBreaks
 }
