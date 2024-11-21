@@ -436,22 +436,25 @@ async function mergeVideos(videos){
   //使用 ffmpeg 将 videos 合并成 mp4 格式的视频，下载至本地命名为 video.mp4
   //需要实现为 await
   console.log("准备合成最终的视频");
-  const filePath = "video.mp4";
+  const filePath = "./video.mp4";
   return new Promise((resolve, reject) => {
     const command = ffmpeg();
     videos.forEach(video => command.input(video));
     command.on('progress', (progress) => {
       console.log(`合成进度: ${progress.percent}%`);
     })
-    .on('end', () => {
+    command.on('end', () => {
       console.log('视频合成完成');
       resolve(filePath);
     })
-    .on('error', (error) => {
+    command.on('error', (error) => {
       console.error('Error:', error);
       reject(error);
     })
-    .mergeToFile(filePath, './temp');
+    // mergeToFile 参数:
+    // filePath: 输出文件的路径
+    // './temp': 临时文件夹的路径，用于存储中间文件
+    command.mergeToFile(filePath, './temp');
   });
 }
 
