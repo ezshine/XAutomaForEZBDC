@@ -440,7 +440,10 @@ async function mergeVideos(videos){
   return new Promise((resolve, reject) => {
     const command = ffmpeg();
     videos.forEach(video => command.input(video));
-    command.on('end', () => {
+    command.on('progress', (progress) => {
+      console.log(`合成进度: ${progress.percent}%`);
+    })
+    .on('end', () => {
       console.log('视频合成完成');
       resolve(filePath);
     })
