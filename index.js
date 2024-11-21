@@ -433,32 +433,22 @@ async function createTTSAudio(text){
 
 // 将多个视频合并成一个
 async function mergeVideos(videos){
-  //使用 ffmpeg 将 videos 数组内所有视频按顺序拼接成 video.mp4 ，并保存至当前目录
+  //使用 ffmpeg 将 videos 合并成 mp4 格式的视频，下载至本地命名为 video.mp4
   //需要实现为 await
   console.log("准备合成最终的视频");
-  const filePath = "./video.mp4";
+  const filePath = "video.mp4";
   return new Promise((resolve, reject) => {
     const command = ffmpeg();
     videos.forEach(video => command.input(video));
-
-    command
-      .on('progress', (progress) => {
-        console.log(`合并进度: ${progress.percent}%`);
-      })
-      .on('end', () => {
-        console.log('视频合并完成');
-        resolve(filePath);
-      })
-      .on('error', (error) => {
-        console.error('合并视频时出错:', error);
-        reject(error);
-      })
-      .mergeToFile(filePath, './temp')
-      .outputOptions([
-        '-c:v libx264',
-        '-c:a aac',
-        '-shortest'
-      ]);
+    command.on('end', () => {
+      console.log('视频合成完成');
+      resolve(filePath);
+    })
+    .on('error', (error) => {
+      console.error('Error:', error);
+      reject(error);
+    })
+    .mergeToFile(filePath, './temp');
   });
 }
 
