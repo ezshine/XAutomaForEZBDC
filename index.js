@@ -6,7 +6,7 @@ import got from 'got';
 import sharp from 'sharp';
 import ffmpeg from 'fluent-ffmpeg';
 
-const isDebug = true;
+const isDebug = false;
 
 async function main() {
     await fs.rm("temp", { recursive: true, force: true });
@@ -115,7 +115,7 @@ async function getTweetText(){
       }
     }
 
-    videos.push("ending.mp4");
+    //videos.push("ending.mp4");
 
     const outputVideoFile = await mergeVideos(videos);
 
