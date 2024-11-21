@@ -440,6 +440,11 @@ async function mergeVideos(videos){
   return new Promise((resolve, reject) => {
     const command = ffmpeg();
     videos.forEach(video => command.input(video));
+    command.outputOptions([
+      '-c:v libx264',
+      '-pix_fmt yuv420p',
+      '-hwaccel cuda',
+    ]);
     command.on('progress', (progress) => {
       console.log(`合成进度: ${progress.percent}%`);
     })
