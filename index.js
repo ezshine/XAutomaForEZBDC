@@ -440,26 +440,20 @@ async function mergeVideos(videos){
   return new Promise((resolve, reject) => {
     const command = ffmpeg();
     videos.forEach(video => command.input(video));
-    command.outputOptions([
-      '-c:v libx264',
-      '-pix_fmt yuv420p',
-      '-hwaccel cuda',
-    ]);
+
     command.on('progress', (progress) => {
-      console.log(`合成进度: ${progress.percent}%`);
+      console.log(`Merging progress: ${progress.percent}%`);
     })
-    command.on('end', () => {
-      console.log('视频合成完成');
+    .on('end', () => {
+      console.log('Video merging completed');
       resolve(filePath);
     })
-    command.on('error', (error) => {
-      console.error('Error:', error);
+    .on('error', (error) => {
+      console.error('Error merging videos:', error);
       reject(error);
     })
-    // mergeToFile 参数:
-    // filePath: 输出文件的路径
-    // './temp': 临时文件夹的路径，用于存储中间文件
-    command.mergeToFile(filePath, './temp');
+    .mergeToFile(filePath, './temp')
+    .outputOptions(['-c:v libx264', '-crf 23', '-preset medium']);
   });
 }
 
