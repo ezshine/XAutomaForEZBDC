@@ -6,7 +6,7 @@ import got from 'got';
 import sharp from 'sharp';
 import ffmpeg from 'fluent-ffmpeg';
 
-const isDebug = false;
+const isDebug = true;
 
 async function main() {
     await fs.rm("temp", { recursive: true, force: true });
@@ -453,7 +453,10 @@ async function mergeVideos(videos){
       reject(error);
     })
     .mergeToFile(filePath, './temp')
-    .outputOptions(['-c:v libx264', '-crf 23', '-preset medium']);
+    .outputOptions([
+      '-c copy',
+      '-f mp4'
+    ]);
   });
 }
 
