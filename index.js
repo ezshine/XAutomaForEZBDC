@@ -69,6 +69,8 @@ async function getTweetText(){
     const word = wordItem.word;
     const phonetic = wordItem.americanPhonetic||wordItem.britishPhonetic;
     const sampleSentences = wordItem.sampleSentences;
+    let description = wordItem.translation[0].replace(/\[[^\]]*\]/g, '')  // 去掉中括号及其内容
+    .replace(/\s+/g, '');
 
     let sentenceIndex = 0;
     
@@ -87,10 +89,9 @@ async function getTweetText(){
         }
     }
 
-    let text =  `每天一个 #背单词：${wordItem.word}`+"\n\n"+
+    let text =  `每天背单词：${wordItem.word}`+"\n\n"+
                     (wordItem.sampleSentences.length>0?(`例句：${wordItem.sampleSentences[sentenceIndex].en}`+"\n"+
                     `翻译：${wordItem.sampleSentences[sentenceIndex].cn}`+"\n\n"):"")+
-                    `查看详情：https://ezbdc.dashu.ai/query/${wordItem.word}.html`+"\n\n"+
                     "关注我，英语每天进步一点";
 
     const audioFile1 = await createTTSAudio(ttsText);
