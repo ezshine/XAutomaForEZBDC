@@ -116,7 +116,7 @@ async function getTweetText(){
       }
     }
 
-    videos.push("ending.mp4");
+    // videos.push("ending.mp4");
 
     const outputVideoFile = await mergeVideos(videos);
 
