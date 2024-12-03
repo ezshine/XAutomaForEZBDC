@@ -116,7 +116,7 @@ async function getTweetText(){
       }
     }
 
-    //videos.push("ending.mp4");
+    videos.push("ending.mp4");
 
     const outputVideoFile = await mergeVideos(videos);
 
@@ -163,6 +163,12 @@ async function createCoverImage(wordItem){
     text-anchor="left" 
     dominant-baseline="central" 
     class="subtitle2">关注我，英语每天进步一点</text>
+    <text 
+    x="1420" 
+    y="100" 
+    text-anchor="right" 
+    dominant-baseline="central" 
+    class="subtitle2">闭眼跟读 10 遍</text>
     <text 
     x="50%" 
     y="50%" 
@@ -453,7 +459,6 @@ async function mergeVideos(videos){
   });
 }
 
-
 async function compositeVideo(audioFile, imageFile, outputFile) {
   const audioInfo = await new Promise((resolve, reject) => {
     ffmpeg.ffprobe(audioFile, (err, metadata) => {
@@ -487,6 +492,27 @@ async function compositeVideo(audioFile, imageFile, outputFile) {
   });
 
   return outputFile;
+}
+
+async function convertVideoCodec(){
+  await new Promise((resolve, reject) => {
+    ffmpeg()
+      .input("ending.mp4")
+      .outputOptions([
+        '-c:v libx264',
+        '-pix_fmt yuv420p'
+      ])
+      .output("ending_c.mp4")
+      .on('end', () => {
+        console.log('视频合成完成');
+        resolve();
+      })
+      .on('error', (error) => {
+        console.error('视频合成失败', error);
+        reject(error);
+      })
+      .run();
+  });
 }
 
 main();
